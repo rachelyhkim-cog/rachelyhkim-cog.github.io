@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rachel [Last Name]</title>
+  <style>
+    :root {
+      --deep:    #060C16;
+      --teal-bg: #07201C;
+      --teal:    #18B8B0;
+      --teal-l:  #24D4CC;
+      --pink:    #CC1852;
+      --amber:   #C87818;
+      --sky:     #3880B8;
+      --white:   #FFFFFF;
+      --w70:     rgba(255,255,255,0.70);
+      --w40:     rgba(255,255,255,0.40);
+      --w20:     rgba(255,255,255,0.20);
+      --w10:     rgba(255,255,255,0.10);
+      --optima:  'Optima', 'Candara', 'Century Gothic', Palatino, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--optima);
+      background: var(--deep);
+      color: var(--white);
+      font-size: 17px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Corridor gradient ─ the recurring thread ─────────── */
+    .corridor {
+      height: 2px;
+      background: linear-gradient(90deg,
+        var(--teal-l), var(--sky), var(--pink), var(--amber), var(--teal-l));
+    }
+
+    /* ── Nav ───────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 200;
+      padding: 1.1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(6,12,22,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--w10);
+    }
+
+    .nav-name {
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--w40);
+      transition: color 0.18s;
+    }
+
+    .nav-links a:hover { color: var(--teal-l); }
+
+    .nav-contact {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--w40);
+      transition: color 0.18s;
+    }
+
+    .nav-contact:hover { color: var(--white); }
+
+    /* ── Name header ── minimal, not a hero ────────────────── */
+    .name-header {
+      padding: 9rem 3rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .name-header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .name-header p {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--w40);
+    }
+
+    /* ── Section headers ── large ──────────────────────────── */
+    .section-header {
+      font-size: clamp(5rem, 13vw, 10.5rem);
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      line-height: 0.9;
+      color: var(--white);
+      padding: 3rem 3rem 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--w10);
+    }
+
+    /* ── Project cards ── alternating image layout ─────────── */
+    .project {
+      display: flex;
+      min-height: 520px;
+      border-bottom: 1px solid var(--w10);
+      max-width: 100%;
+    }
+
+    .project.flip { flex-direction: row-reverse; }
+
+    /* Image side — 60% */
+    .project-img {
+      flex: 0 0 60%;
+      background: rgba(255,255,255,0.035);
+      border-right: 1px solid var(--w10);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project.flip .project-img {
+      border-right: none;
+      border-left: 1px solid var(--w10);
+    }
+
+    /* Placeholder hint */
+    .project-img::after {
+      content: 'Add image';
+      font-family: var(--optima);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--w20);
+      pointer-events: none;
+    }
+
+    /* When a real <img> is added, it fills and hides the hint */
+    .project-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project-img:has(img)::after { display: none; }
+
+    /* Text side — 40% */
+    .project-body {
+      flex: 1;
+      padding: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .project-cat {
+      font-size: 0.6rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .wire   .project-cat { color: var(--amber); }
+    .design .project-cat { color: var(--pink); }
+    .web    .project-cat { color: var(--sky); }
+
+    .project-body h3 {
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-body p {
+      font-size: 0.9rem;
+      color: var(--w70);
+      line-height: 1.75;
+      margin-bottom: 1.75rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: gap 0.18s, opacity 0.18s;
+    }
+
+    .project-link:hover { gap: 0.95rem; opacity: 0.75; }
+
+    .wire   .project-link { color: var(--amber); }
+    .design .project-link { color: var(--pink); }
+    .web    .project-link { color: var(--sky); }
+
+    .arrow {
+      width: 13px; height: 13px; flex-shrink: 0;
+    }
+
+    /* ── Research section ── teal room ─────────────────────── */
+    #research { background: var(--teal-bg); }
+
+    /* Research cards — large image on top, text below */
+    .research-card {
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .research-img {
+      width: 100%;
+      height: 440px;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .research-img::after {
+      content: 'Add image';
+      font-family: var(--optima);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+    }
+
+    .research-img img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .research-img:has(img)::after { display: none; }
+
+    .research-body {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 5rem;
+      padding: 3.5rem 3rem;
+      align-items: start;
+    }
+
+    .research-cat {
+      font-size: 0.6rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--teal-l);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .research-body h3 {
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 1.1rem;
+      letter-spacing: 0.005em;
+    }
+
+    .research-body > div > p {
+      font-size: 0.9rem;
+      color: var(--w70);
+      line-height: 1.75;
+      margin-bottom: 1.75rem;
+    }
+
+    .research-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal-l);
+      transition: gap 0.18s, opacity 0.18s;
+    }
+
+    .research-link:hover { gap: 0.95rem; opacity: 0.75; }
+
+    /* Research metadata column */
+    .research-meta {
+      border-left: 1px solid rgba(255,255,255,0.08);
+      padding-left: 5rem;
+      padding-top: 0.5rem;
+    }
+
+    .meta-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 0.35rem;
+    }
+
+    .meta-value {
+      font-size: 0.85rem;
+      color: var(--w70);
+      margin-bottom: 1.75rem;
+      line-height: 1.55;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    footer {
+      background: #030608;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.18);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+    }
+
+    .footer-links a {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.22);
+      transition: color 0.18s;
+    }
+
+    .footer-links a:hover { color: var(--teal-l); }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      .name-header { padding: 7rem 1.5rem 3rem; }
+      .section-header { padding: 2.5rem 1.5rem 2rem; font-size: 18vw; }
+
+      .project, .project.flip { flex-direction: column; min-height: auto; }
+      .project-img { flex: none; height: 280px; border-right: none; border-left: none; border-bottom: 1px solid var(--w10); }
+      .project.flip .project-img { border-left: none; }
+      .project-body { padding: 2rem 1.5rem; justify-content: flex-start; }
+
+      .research-body { grid-template-columns: 1fr; gap: 2rem; }
+      .research-meta { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; }
+      .research-img { height: 240px; }
+      .research-body { padding: 2rem 1.5rem; }
+
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.75rem 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <span class="nav-name">Rachel [Last Name]</span>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="mailto:your@email.com" class="nav-contact">your@email.com</a></li>
+    </ul>
+  </nav>
+
+  <!-- Minimal name header -->
+  <header class="name-header">
+    <h1>Rachel [Last Name]</h1>
+    <p>Research &amp; Evaluation &ensp;·&ensp; Los Angeles</p>
+  </header>
+
+  <div class="corridor"></div>
+
+  <!-- ── PROJECTS ─────────────────────────────────────────── -->
+  <section id="projects">
+    <h2 class="section-header">Projects</h2>
+
+    <!-- Project 1: Wireframes -->
+    <div class="project wire">
+
+      <div class="project-img">
+        <!--
+          TO ADD AN IMAGE:
+          Replace this comment with: <img src="your-image.jpg" alt="App wireframes">
+        -->
+      </div>
+
+      <div class="project-body">
+        <span class="project-cat">UX / Wireframing</span>
+        <h3>[Mobile App Name]</h3>
+        <p>[Describe what this app does, who it was for, and what your wireframing process looked like. What problem were you solving, and what decisions did you make in the design?]</p>
+        <a href="#" class="project-link">
+          <!-- Replace href="#" with your Figma or PDF link -->
+          View wireframes
+          <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Project 2: Design work (flipped) -->
+    <div class="project design flip">
+
+      <div class="project-img">
+        <!--
+          TO ADD AN IMAGE:
+          Replace this comment with: <img src="your-image.jpg" alt="Brochures and posters">
+        -->
+      </div>
+
+      <div class="project-body">
+        <span class="project-cat">Graphic Design</span>
+        <h3>Brochures &amp; Posters</h3>
+        <p>[Describe what you made, for which organizations or purposes, and what the design goals were. Who was the audience and what were you communicating?]</p>
+        <a href="#" class="project-link">
+          <!-- Replace href="#" with your design portfolio link or Google Drive folder -->
+          View samples
+          <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Project 3: Websites -->
+    <div class="project web">
+
+      <div class="project-img">
+        <!--
+          TO ADD AN IMAGE:
+          Replace this comment with: <img src="your-image.jpg" alt="Website screenshot">
+        -->
+      </div>
+
+      <div class="project-body">
+        <span class="project-cat">Web Design &amp; Development</span>
+        <h3>Websites</h3>
+        <p>[Describe the websites you've built — Made New Foundation and any others. What tools did you use, what was the goal, and who was the audience?]</p>
+        <a href="#" class="project-link">
+          <!-- Replace href="#" with the URL of the site -->
+          Visit site
+          <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="corridor"></div>
+
+  <!-- ── RESEARCH ──────────────────────────────────────────── -->
+  <section id="research">
+    <h2 class="section-header">Research</h2>
+
+    <div class="research-card">
+
+      <div class="research-img">
+        <!--
+          TO ADD AN IMAGE:
+          Replace this comment with: <img src="your-image.jpg" alt="Capstone paper">
+        -->
+      </div>
+
+      <div class="research-body">
+        <div>
+          <span class="research-cat">Academic Research — Capstone</span>
+          <h3>Enhancing Global Crisis Communication via Generative AI Chatbots: The Importance of Personalized Crisis Communication</h3>
+          <p>[Add 2–3 sentences on what this paper argues, what methods you used, and what it contributes. This is your headline academic work — give it a real description.]</p>
+          <a href="#" class="research-link">
+            <!-- Replace href="#" with your paper link or hosted PDF -->
+            Read the paper
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="research-meta">
+          <p class="meta-label">Institution</p>
+          <p class="meta-value">UCLA — Master's in Social Science</p>
+          <p class="meta-label">Year</p>
+          <p class="meta-value">[Year]</p>
+          <p class="meta-label">Keywords</p>
+          <p class="meta-value">Crisis communication · Generative AI · Personalization · Chatbots</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="corridor"></div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Rachel [Last Name]</p>
+    <div class="footer-links">
+      <a href="mailto:your@email.com">Email</a>
+      <a href="https://linkedin.com/in/yourhandle" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="/resume.pdf" target="_blank" rel="noopener">CV</a>
+    </div>
+  </footer>
+
+</body>
+</html>
