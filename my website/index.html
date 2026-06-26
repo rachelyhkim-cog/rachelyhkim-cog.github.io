@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rachel Y. Kim</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Pool room pastel palette — drawn from images 1 & 2 */
+      --tile:       #dfece8;   /* cool white tile — the walls */
+      --tile-warm:  #ECE8DA;   /* warm ivory pillar room — image 2 */
+      --aqua-pale:  #BEE0DA;   /* palest pool water */
+      --aqua:       #7ECCC0;   /* soft pastel aqua — the water surface */
+      --aqua-deep:  #4AB8A8;   /* medium aqua for headers & footer */
+      --sky:        #C8E2EC;   /* pale ceiling blue — image 1 overhead */
+      --mint:       #CCEAE4;   /* soft mint */
+      --ink:        #1C2A28;   /* dark text for all light sections */
+      --ink-60:     rgba(28,42,40,0.60);
+      --ink-35:     rgba(28,42,40,0.35);
+      --ink-12:     rgba(28,42,40,0.12);
+      --teal-link:  #1E8070;   /* dark teal for links on pale sections */
+      --white:      #FFFFFF;
+      --w80:        rgba(255,255,255,0.80);
+      --w50:        rgba(255,255,255,0.50);
+      --w20:        rgba(255,255,255,0.20);
+      --optima:     "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--optima);
+      background: var(--tile);
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Corridor: soft pastel shimmer ─────────────────────── */
+    .corridor {
+      height: 2px;
+      background: linear-gradient(90deg,
+        var(--aqua-deep), var(--sky), var(--mint), var(--aqua-pale), var(--aqua-deep));
+    }
+
+    /* ── Nav ── medium aqua, spa-like ──────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 200;
+      padding: 1.1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(74, 184, 168, 0.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--w20);
+    }
+
+    .nav-name {
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--w80);
+      transition: color 0.18s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-contact {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--w80);
+      transition: color 0.18s;
+    }
+
+    .nav-contact:hover { color: var(--white); }
+
+    /* ── Name header ── white tile room ────────────────────── */
+    .name-header-wrapper { background: var(--tile); }
+
+    .name-header {
+      padding: 9rem 3rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .name-header h1 {
+      font-size: clamp(3rem, 4vw, 3rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .name-header p {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-35);
+    }
+
+    .name-header p.name-intro {
+      margin-top: 1.25rem;
+      font-size: 0.97rem;
+      color: var(--ink);
+      line-height: 1.75;
+      text-transform: none;
+      letter-spacing: normal;
+      font-weight: 300;
+    }
+
+    /* ── Section headers ── medium aqua ────────────────────── */
+    .section-header-wrap { background: var(--aqua-deep); }
+
+    .section-header {
+      font-size: clamp(1.5rem, 3vw, 4rem);
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      line-height: 0.9;
+      color: var(--white);
+      padding: 3rem 3rem 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--w20);
+    }
+
+    /* ── Per-project backgrounds ── all pastels ────────────── */
+    #proj-websites   { background: var(--aqua-pale);  }  /* palest pool water */
+    #proj-reports    { background: var(--tile-warm);  }  /* warm ivory pillar room */
+    #proj-wireframes { background: var(--sky);        }  /* soft ceiling blue */
+    #proj-brochures  { background: var(--mint);       }  /* soft mint tile */
+    #research        { background: var(--aqua);       }  /* soft pastel aqua */
+
+    /* ── Project cards ─────────────────────────────────────── */
+    .project {
+      display: flex;
+      min-height: 420px;
+      max-width: 100%;
+      border-bottom: 1px solid var(--ink-12);
+    }
+
+    .project.flip { flex-direction: row-reverse; }
+
+    .project-img {
+      flex: 0 0 60%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid var(--ink-12);
+    }
+
+    .project.flip .project-img {
+      border-right: none;
+      border-left: 1px solid var(--ink-12);
+    }
+
+    .project-img::after {
+      content: 'Add image';
+      font-family: var(--optima);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-35);
+      pointer-events: none;
+    }
+
+    .project-img img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .project-img:has(img)::after { display: none; }
+
+    .project-body {
+      flex: 1;
+      padding: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* All project text is dark (all sections are light) */
+    .project-cat {
+      font-size: 0.9rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
+      color: var(--teal-link);
+    }
+
+    .project-body h3 {
+      font-size: clamp(1rem, 2vw, 2rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-body p {
+      font-size: 0.9rem;
+      color: var(--ink-60);
+      line-height: 1.75;
+      margin-bottom: 1.75rem;
+    }
+
+    .project-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal-link);
+      transition: gap 0.18s, opacity 0.18s;
+    }
+
+    .project-link:hover { gap: 0.95rem; opacity: 0.7; }
+
+    .arrow { width: 13px; height: 13px; flex-shrink: 0; }
+
+    /* ── Research section ── pastel aqua ───────────────────── */
+    .research-card {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .research-img {
+      width: 100%;
+      height: 440px;
+      background: rgba(255,255,255,0.3);
+      border-bottom: 1px solid var(--ink-12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .research-img::after {
+      content: 'Add image';
+      font-family: var(--optima);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-35);
+    }
+
+    .research-img img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .research-img:has(img)::after { display: none; }
+
+    .research-body {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 5rem;
+      padding: 3.5rem 3rem;
+      align-items: start;
+    }
+
+    .research-cat {
+      font-size: 0.9rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--teal-link);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .research-body h3 {
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 1.1rem;
+    }
+
+    .research-body > div > p {
+      font-size: 0.9rem;
+      color: var(--ink-60);
+      line-height: 1.75;
+      margin-bottom: 1.75rem;
+    }
+
+    .research-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal-link);
+      transition: gap 0.18s, opacity 0.18s;
+    }
+
+    .research-link:hover { gap: 0.95rem; opacity: 0.7; }
+
+    .research-meta {
+      border-left: 1px solid var(--ink-12);
+      padding-left: 5rem;
+      padding-top: 0.5rem;
+    }
+
+    .meta-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--ink-35);
+      margin-bottom: 0.35rem;
+    }
+
+    .meta-value {
+      font-size: 0.85rem;
+      color: var(--ink-60);
+      margin-bottom: 1.75rem;
+      line-height: 1.55;
+    }
+
+    /* ── Footer ── medium aqua, matches nav ─────────────────── */
+    footer {
+      background: var(--aqua-deep);
+      border-top: 1px solid var(--w20);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--w80);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.75rem;
+    }
+
+    .footer-links a {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--w80);
+      transition: color 0.18s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      .name-header { padding: 7rem 1.5rem 3rem; }
+      .section-header { padding: 2.5rem 1.5rem 2rem; font-size: 10vw; }
+
+      .project, .project.flip { flex-direction: column; min-height: auto; }
+      .project-img {
+        flex: none; height: 280px;
+        border-right: none; border-left: none;
+        border-bottom: 1px solid var(--ink-12);
+      }
+      .project-body { padding: 2rem 1.5rem; justify-content: flex-start; }
+
+      .research-body { grid-template-columns: 1fr; gap: 2rem; }
+      .research-meta {
+        border-left: none; padding-left: 0;
+        border-top: 1px solid var(--ink-12);
+        padding-top: 2rem;
+      }
+      .research-img { height: 240px; }
+      .research-body { padding: 2rem 1.5rem; }
+      footer { flex-direction: column; text-align: center; padding: 1.75rem 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <span class="nav-name">Rachel Y. Kim</span>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="mailto:kim.rachel2000@gmail.com" class="nav-contact">kim.rachel2000@gmail.com</a></li>
+    </ul>
+  </nav>
+
+  <!-- Name header — cool white tile -->
+  <div class="name-header-wrapper">
+    <header class="name-header">
+      <h1>Rachel Y. Kim, M.S.S.</h1>
+      <p>Social Science Researcher &ensp;·&ensp; Los Angeles, CA</p>
+      <p class="name-intro">My interests center on empathy, prosocial behavior, and social cognition — and on the ethical questions that arise when AI begins to shape how people communicate, connect, and understand their world. Most of my work has lived in research labs and nonprofits, and I'm building toward a career in humanitarian organizations where those questions have the most at stake. This portfolio collects the projects, tools, and writing that have come out of those interests.</p>
+    </header>
+  </div>
+
+  <div class="corridor"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+
+    <div class="section-header-wrap">
+      <h2 class="section-header">Projects</h2>
+    </div>
+
+    <!-- Websites — palest pool water -->
+    <div class="project web" id="proj-websites">
+      <div class="project-img">
+        <img src="images/WebsiteArts.png" alt="Website screenshot">
+      </div>
+      <div class="project-body">
+        <span class="project-cat">Web Design &amp; Development</span>
+        <h3>Websites</h3>
+        <p>I designed and built websites for Made New Foundation and Two Hearts One Mission using Squarespace, content strategy, and visual design to translate each organization's mission, services, and community impact into clear public-facing websites for funders, partners, participants, and community members.</p>
+        <div class="project-links">
+          <a href="https://madenewfoundation.org" target="_blank" class="project-link">
+            Made New Foundation Website
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="https://twoheartsonemission.org" target="_blank" class="project-link">
+            Two Hearts One Mission Website
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Impact Reports — warm ivory pillar room -->
+    <div class="project design flip" id="proj-reports">
+      <div class="project-img">
+        <img src="images/impactreportart.png" alt="Impact Report Examples">
+      </div>
+      <div class="project-body">
+        <span class="project-cat">Reports</span>
+        <h3>Impact Reports</h3>
+        <p>I created stakeholder-facing impact reports that combine program highlights, organizational milestones, participant stories, service numbers, partnerships, and financial snapshots into clear visual materials for funders, partners, board members, and community stakeholders.</p>
+        <div class="project-links">
+          <a href="files/ImpactreportMNF2026.pdf" target="_blank" class="project-link">
+            Made New Foundation Impact Report
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="files/GILA x UCLA Project Report.pdf" target="_blank" class="project-link">
+            Girls Inc. of Los Angeles Report
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wireframes — pale ceiling blue -->
+    <div class="project wire" id="proj-wireframes">
+      <div class="project-img">
+        <img src="images/remecoart.png" alt="Remeco Example Art">
+      </div>
+      <div class="project-body">
+        <span class="project-cat">UX / Wireframing</span>
+        <h3>Wireframing</h3>
+        <p>I designed mobile app wireframes and prototypes that turn early concepts into structured user flows, functional screen layouts, and interactive experiences for testing and refinement. Remeco was an independent class project where I designed a mobile app concept from the ground up. For Huddle, as part of a team project, I focused on wireframing, prototyping, and organizing user flows to help turn an early product idea into a usable mobile experience.</p>
+        <div class="project-links">
+          <a href="https://www.figma.com/proto/Mt0ep4yN9BOBHkf7VtBzHw/Demo--1?node-id=0-1&t=PUEq5oBGgIFc9CIp-1" target="_blank" class="project-link">
+            Huddle: Student Connection App
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="https://www.figma.com/proto/9PsY2xJkBeviSvolpVRVsP/Final-Project?node-id=0-1&t=ogPbFRW1BExMmcLP-1" target="_blank" class="project-link">
+            Remeco: Mental Health App
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brochures — soft mint -->
+    <div class="project design flip" id="proj-brochures">
+      <div class="project-img">
+        <img src="images/Brochuresart.png" alt="Brochures Sample">
+      </div>
+      <div class="project-body">
+        <span class="project-cat">Graphic Design</span>
+        <h3>Brochures &amp; Posters</h3>
+        <p>I developed visual communication and strategy materials, including posters, brochures, theory of change documents, and program frameworks, to make organizational goals, services, and impact easier for funders, partners, staff, and community members to understand.</p>
+        <div class="project-links">
+          <a href="files/Trifold Brochure MNF.pdf" target="_blank" class="project-link">
+            Trifold Brochure
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="files/Theory of Change.png" target="_blank" class="project-link">
+            Theory of Change
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="files/BennettKewPoster.png" target="_blank" class="project-link">
+            Reimagining Reality Youth Program Poster
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="corridor"></div>
+
+  <!-- RESEARCH — soft pastel aqua -->
+  <section id="research">
+
+    <div class="section-header-wrap">
+      <h2 class="section-header">Research</h2>
+    </div>
+
+    <div class="research-card">
+      <div class="research-img">
+        <img src="images/earthart.png" alt="Earth Art">
+      </div>
+      <div class="research-body">
+        <div>
+          <span class="research-cat">Academic Research — Capstone</span>
+          <h3>Enhancing Global Crisis Communication via Generative AI Chatbots: The Importance of Personalized Crisis Communication</h3>
+          <p>This review paper examines how generative AI chatbots can improve global crisis communication by delivering more personalized, context-sensitive guidance during moments of uncertainty. Using a literature-based analysis of crisis communication, cognitive barriers, and AI-mediated messaging, the paper argues that chatbot systems can help address confusion, mistrust, information overload, and differences in how people interpret risk. It contributes a framework for thinking about AI as a communication tool that can adapt public-facing crisis messages to different audiences without losing clarity, accuracy, or ethical responsibility.</p>
+          <a href="files/Enhancing Global Crisis Communication via Generative AI Chatbots.pdf" target="_blank" class="research-link">
+            Read the paper
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+        <div class="research-meta">
+          <p class="meta-label">Institution</p>
+          <p class="meta-value">UCLA — Master's in Social Science</p>
+          <p class="meta-label">Year</p>
+          <p class="meta-value">2025</p>
+          <p class="meta-label">Keywords</p>
+          <p class="meta-value">Crisis communication · Generative AI · Personalization · Chatbots</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="corridor"></div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Rachel Y. Kim</p>
+    <div class="footer-links">
+      <a href="mailto:kim.rachel2000@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/rachelyhkim" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="/resume.pdf" target="_blank" rel="noopener">CV</a>
+    </div>
+    <p>Website template generated with Claude; customized, edited, and maintained using Visual Studio Code.</p>
+  </footer>
+
+</body>
+</html>
