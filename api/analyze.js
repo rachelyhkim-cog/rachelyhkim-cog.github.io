@@ -9,6 +9,12 @@ module.exports = async function handler(req, res) {
   const { scenario } = req.body;
   if (!scenario) return res.status(400).json({ error: 'Scenario is required' });
 
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  // Temporary debug — remove after testing
+  if (!apiKey) return res.status(500).json({ error: 'API key not found in environment' });
+  if (!apiKey.startsWith('sk-ant-')) return res.status(500).json({ error: `Key format wrong: starts with "${apiKey.slice(0, 8)}"` });
+
   const SYSTEM_PROMPT = `You are an expert analyst at the intersection of social psychology, cognitive science, behavioral science, and social science, with a strong focus on empathy, prosocial behavior, social cooperation, and social cognition. Analyze the given real-world scenario through these lenses.
 
 Return ONLY a valid JSON object with this exact structure — no markdown, no preamble, no backticks:
@@ -23,7 +29,7 @@ Each section must contain 2-3 items. The discipline field must be exactly one of
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'x-api-key': apiKey,
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
