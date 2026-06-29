@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prism — Behavioral Analysis Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FFF7E8;
+      --pink: #F7467A;
+      --yellow: #E4BD54;
+      --green: #7DAA4D;
+      --blue: #9DD9F3;
+      --text: #1A1A1A;
+      --muted: #6B7280;
+      --faint: #9CA3AF;
+      --border: #E2D9C8;
+      --white: #fff;
+    }
+
+    body {
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      min-height: 100vh;
+    }
+
+    /* ── Spectrum bar ── */
+    .spectrum { display: flex; height: 4px; }
+    .spectrum div { flex: 1; }
+
+    /* ── Header ── */
+    .hdr {
+      background: var(--white);
+      border-bottom: 1.5px solid var(--border);
+      padding: 13px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.5rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-bars { display: flex; gap: 2px; }
+    .lb { width: 5px; height: 20px; border-radius: 2px; }
+    .nav { display: flex; gap: 5px; flex-wrap: wrap; }
+    .ntag {
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* ── API key banner ── */
+    .api-banner {
+      background: var(--white);
+      border-bottom: 1.5px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .api-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--faint);
+      white-space: nowrap;
+    }
+    .api-input {
+      flex: 1;
+      min-width: 220px;
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: .84rem;
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: border-color .12s;
+      letter-spacing: .04em;
+    }
+    .api-input:focus { border-color: var(--pink); }
+    .api-hint {
+      font-size: .72rem;
+      color: var(--faint);
+      line-height: 1.5;
+    }
+    .api-hint a { color: var(--pink); text-decoration: none; }
+    .api-hint a:hover { text-decoration: underline; }
+    .api-status {
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .api-status.set { background: #EDF5E8; color: #3A6020; }
+    .api-status.unset { background: #FDEDF2; color: #A0234A; }
+
+    /* ── Main layout ── */
+    .hero { max-width: 720px; margin: 0 auto; padding: 48px 24px 32px; }
+    .eyebrow {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 12px;
+    }
+    .h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 2.2rem;
+      line-height: 1.18;
+      letter-spacing: -.01em;
+      margin-bottom: 14px;
+    }
+    .sub {
+      font-size: .97rem;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    /* ── Input section ── */
+    .inp-sec { max-width: 720px; margin: 0 auto; padding: 0 24px 48px; }
+    .slabel {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 9px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+    .chip {
+      padding: 5px 13px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: .76rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color .12s, color .12s, background .12s;
+      outline: none;
+    }
+    .chip:hover { border-color: var(--pink); color: var(--pink); }
+    .chip.on { background: var(--pink); border-color: var(--pink); color: var(--white); }
+
+    .tarea {
+      width: 100%;
+      min-height: 92px;
+      padding: 13px 15px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: .91rem;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--white);
+      resize: vertical;
+      outline: none;
+      margin-bottom: 13px;
+      transition: border-color .12s;
+    }
+    .tarea:focus { border-color: var(--pink); }
+
+    .abtn {
+      padding: 10px 24px;
+      background: var(--pink);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: .86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .12s, transform .1s;
+    }
+    .abtn:hover:not(:disabled) { background: #D93568; transform: translateY(-1px); }
+    .abtn:disabled { opacity: .4; cursor: not-allowed; }
+
+    .err {
+      margin-top: 10px;
+      padding: 9px 13px;
+      background: #FDEDF2;
+      border-left: 3px solid var(--pink);
+      border-radius: 0 5px 5px 0;
+      font-size: .82rem;
+      color: #A0234A;
+    }
+
+    /* ── Loading ── */
+    .loading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 32px 0;
+      font-size: .84rem;
+      color: var(--faint);
+    }
+    .dots { display: flex; gap: 4px; }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      animation: bop 1.3s infinite ease-in-out both;
+    }
+    .dot:nth-child(1) { background: var(--pink); animation-delay: -.32s; }
+    .dot:nth-child(2) { background: var(--yellow); animation-delay: -.16s; }
+    .dot:nth-child(3) { background: var(--green); }
+    .dot:nth-child(4) { background: var(--blue); animation-delay: .16s; }
+    @keyframes bop {
+      0%, 80%, 100% { transform: scale(.5); opacity: .3; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ── Results ── */
+    .res-sec {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 34px 24px 56px;
+      border-top: 1.5px solid var(--border);
+    }
+    .res-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .res-h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.3rem;
+      margin-bottom: 4px;
+    }
+    .res-preview { font-size: .78rem; color: var(--faint); font-style: italic; }
+
+    .fwtgl {
+      padding: 6px 13px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      background: var(--white);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--faint);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .12s;
+    }
+    .fwtgl:hover { border-color: var(--text); color: var(--text); }
+    .fwtgl.on { background: var(--text); color: var(--white); border-color: var(--text); }
+
+    .rcard {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .chead {
+      padding: 10px 17px;
+      border-bottom: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .cion {
+      width: 24px; height: 24px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .ctitle {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .cbody { padding: 15px 17px; display: flex; flex-direction: column; gap: 13px; }
+    .irow { display: flex; gap: 9px; align-items: flex-start; }
+    .dtag {
+      flex-shrink: 0;
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-size: .56rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      margin-top: 3px;
+      white-space: nowrap;
+    }
+    .iright { flex: 1; }
+    .itext { font-size: .88rem; line-height: 1.62; }
+    .fwblk {
+      display: none;
+      margin-top: 8px;
+      padding: 8px 10px 8px 11px;
+      background: var(--cream);
+      border-left: 3px solid;
+      border-radius: 0 5px 5px 0;
+    }
+    .fwblk.vis { display: block; }
+    .fwname { font-size: .68rem; font-weight: 700; margin-bottom: 3px; }
+    .fwexp { font-size: .75rem; line-height: 1.55; color: var(--muted); }
+
+    /* ── Footer ── */
+    .ftr {
+      background: var(--white);
+      border-top: 1.5px solid var(--border);
+      padding: 15px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .ftr-p { font-size: .7rem; color: var(--faint); }
+    .ftr-tags { display: flex; gap: 4px; }
+    .ftr-tag {
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-size: .56rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Spectrum accent bar -->
+  <div class="spectrum">
+    <div style="background:#F7467A"></div>
+    <div style="background:#E4BD54"></div>
+    <div style="background:#7DAA4D"></div>
+    <div style="background:#9DD9F3"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="hdr">
+    <div class="logo">
+      <div class="logo-bars">
+        <div class="lb" style="background:#F7467A"></div>
+        <div class="lb" style="background:#E4BD54"></div>
+        <div class="lb" style="background:#7DAA4D"></div>
+        <div class="lb" style="background:#9DD9F3"></div>
+      </div>
+      Prism
+    </div>
+    <nav class="nav" aria-label="Disciplines">
+      <span class="ntag" style="background:#FDEDF2;color:#A0234A">Behavioral Science</span>
+      <span class="ntag" style="background:#E8F5FD;color:#1A6080">Cognitive Science</span>
+      <span class="ntag" style="background:#FDF7E0;color:#7A6010">Social Psychology</span>
+      <span class="ntag" style="background:#EDF5E8;color:#3A6020">Social Science</span>
+    </nav>
+  </header>
+
+  <!--
+    ═══════════════════════════════════════════════════════
+    API KEY SECTION
+    ═══════════════════════════════════════════════════════
+    This is where the user enters their Anthropic API key.
+
+    HOW IT WORKS:
+    - The key is stored in sessionStorage (your browser's
+      temporary memory — cleared when the tab closes).
+    - It is never sent anywhere except directly to
+      Anthropic's API when you click "Analyze."
+    - You can get your API key at:
+      https://console.anthropic.com/settings/keys
+    ═══════════════════════════════════════════════════════
+  -->
+  <div class="api-banner">
+    <span class="api-label">Anthropic API key</span>
+    <input
+      class="api-input"
+      id="api-key-input"
+      type="password"
+      placeholder="sk-ant-..."
+      aria-label="Anthropic API key"
+      oninput="handleKeyInput(this.value)"
+    />
+    <span class="api-status unset" id="api-status">Not set</span>
+    <p class="api-hint">
+      Get your key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>.
+      Stored in your browser session only — never saved or shared.
+    </p>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="eyebrow">Behavioral analysis tool</p>
+    <h1 class="h1">See what's driving human behavior beneath the surface.</h1>
+    <p class="sub">
+      Enter a real-world policy, program, or social problem. Prism surfaces the empathic,
+      cooperative, and cognitive dynamics at work — drawing from four scientific disciplines.
+    </p>
+  </section>
+
+  <!-- Input -->
+  <section class="inp-sec">
+    <p class="slabel">Try an example</p>
+    <div class="chips" role="group" aria-label="Example scenarios">
+      <button class="chip" data-s="A city implements a $5 congestion charge to reduce downtown traffic, but public resistance remains high despite clear environmental benefits.">Congestion pricing</button>
+      <button class="chip" data-s="A community health program distributes free contraceptives but uptake remains low in rural areas despite extensive outreach campaigns.">Rural health uptake</button>
+      <button class="chip" data-s="A nonprofit offers free job training to formerly incarcerated individuals, but many do not complete the program despite wanting stable employment.">Re-entry job training</button>
+      <button class="chip" data-s="A public health campaign promotes childhood vaccination but hesitancy persists in communities with historically low institutional trust.">Vaccine hesitancy</button>
+      <button class="chip" data-s="A humanitarian aid organization struggles to mobilize local volunteers in conflict-affected communities, despite widespread acknowledgment of need.">Volunteer mobilization</button>
+    </div>
+
+    <p class="slabel">Or describe your own scenario</p>
+    <textarea
+      class="tarea"
+      id="scenario-input"
+      placeholder="Describe a policy, community program, or social problem you want to understand better…"
+      aria-label="Scenario input"
+    ></textarea>
+
+    <div id="err-box" class="err" style="display:none"></div>
+    <button class="abtn" id="analyze-btn" onclick="analyze()" disabled>Analyze with Prism →</button>
+
+    <div class="loading" id="loading-area" style="display:none">
+      <div class="dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      Analyzing across four disciplines…
+    </div>
+  </section>
+
+  <!-- Results injected here by JS -->
+  <div id="results-area"></div>
+
+  <!-- Footer -->
+  <footer class="ftr">
+    <p class="ftr-p">Prism foregrounds empathy, social cooperation, prosocial behavior, and social cognition.</p>
+    <div class="ftr-tags">
+      <span class="ftr-tag" style="background:#FDEDF2;color:#A0234A">BS</span>
+      <span class="ftr-tag" style="background:#E8F5FD;color:#1A6080">CS</span>
+      <span class="ftr-tag" style="background:#FDF7E0;color:#7A6010">SP</span>
+      <span class="ftr-tag" style="background:#EDF5E8;color:#3A6020">SS</span>
+    </div>
+  </footer>
+
+  <script>
+    /*
+    ═══════════════════════════════════════════════════════
+    HOW THE ANTHROPIC API CALL WORKS
+    ═══════════════════════════════════════════════════════
+
+    The Anthropic API works like this:
+
+    1. You send a POST request to:
+       https://api.anthropic.com/v1/messages
+
+    2. The request includes:
+       - Your API key in a header (x-api-key)
+       - A "system" prompt: instructions that define how
+         the model should behave across all messages
+       - A "messages" array: the actual conversation.
+         Each message has a "role" (user or assistant)
+         and "content" (the text)
+       - The model name (we use claude-sonnet-4-6)
+       - max_tokens: a cap on how long the response can be
+
+    3. The API returns a JSON object. The response text
+       lives at: data.content[0].text
+
+    4. We've told the model to return JSON, so we parse
+       that text as JSON to get structured data we can
+       render into the UI.
+
+    That's the entire pattern. Everything else here is
+    just UI logic.
+    ═══════════════════════════════════════════════════════
+    */
+
+    // ── Discipline color map ──────────────────────────────
+    const DISCIPLINE_STYLES = {
+      "Behavioral Science": { bg: "#FDEDF2", text: "#A0234A", border: "#F7467A" },
+      "Cognitive Science":  { bg: "#E8F5FD", text: "#1A6080", border: "#9DD9F3" },
+      "Social Psychology":  { bg: "#FDF7E0", text: "#7A6010", border: "#E4BD54" },
+      "Social Science":     { bg: "#EDF5E8", text: "#3A6020", border: "#7DAA4D" },
+    };
+
+    const CARDS = [
+      { key: "dynamics", title: "Behavioral dynamics",   iconClass: "ti-refresh",     ibg: "#FDEDF2" },
+      { key: "barriers", title: "Barriers to change",    iconClass: "ti-lock",         ibg: "#FDF7E0" },
+      { key: "levers",   title: "Evidence-based levers", iconClass: "ti-arrow-right",  ibg: "#EDF5E8" },
+    ];
+
+    // ── System prompt ────────────────────────────────────
+    // This is the instruction set we send to the model
+    // on every request. It defines the model's persona,
+    // what frameworks to draw from, and the exact JSON
+    // structure we want back.
+    const SYSTEM_PROMPT = `You are an expert analyst at the intersection of social psychology, cognitive science, behavioral science, and social science, with a strong focus on empathy, prosocial behavior, social cooperation, and social cognition. Analyze the given real-world scenario through these lenses.
+
+Return ONLY a valid JSON object with this exact structure — no markdown, no preamble, no backticks:
+{"dynamics":[{"insight":"Specific plain-language description of an empathic, cooperative, or cognitive dynamic at play in this scenario","discipline":"Behavioral Science","framework_name":"Theory or concept name","framework_explanation":"1-2 sentences explaining the theory accessibly for a non-expert"}],"barriers":[{"insight":"Specific plain-language explanation of why prosocial or cooperative behavior breaks down or fails to emerge","discipline":"Cognitive Science","framework_name":"Theory or concept name","framework_explanation":"1-2 sentences explaining accessibly"}],"levers":[{"insight":"Specific evidence-based recommendation grounded in empathy research, cooperation science, or prosocial psychology","discipline":"Social Psychology","framework_name":"Theory or concept name","framework_explanation":"1-2 sentences explaining accessibly"}]}
+
+Prioritize concepts from: empathy (cognitive vs affective empathy, perspective-taking, empathy gaps, compassion fatigue), prosocial behavior (altruism, bystander effect, moral licensing, identifiable victim effect, warm glow giving), social cooperation (collective action problems, public goods dilemmas, reciprocity norms, trust and reputation, tit-for-tat dynamics), social cognition (theory of mind, attribution errors, in-group/out-group bias, social identity theory, stereotype threat, intergroup contact theory), and related areas (self-efficacy, moral disengagement, motivated reasoning, social proof, narrative and empathy, compassion satisfaction).
+
+Also draw where relevant from: dual-process theory, cognitive load, status quo bias, institutional trust, social capital, and structural explanations of behavior.
+
+Each section must contain 2-3 items. The discipline field must be exactly one of: Behavioral Science, Cognitive Science, Social Psychology, Social Science. Mix disciplines across all three sections. Insights must be specific to the scenario. Framework explanations must be accessible to a general audience.`;
+
+    // ── State ────────────────────────────────────────────
+    let showFrameworks = false;
+
+    // ── API key handling ─────────────────────────────────
+    function handleKeyInput(value) {
+      const trimmed = value.trim();
+      // Store in sessionStorage so it persists across
+      // interactions within this browser tab only
+      if (trimmed) {
+        sessionStorage.setItem('prism_api_key', trimmed);
+        document.getElementById('api-status').textContent = 'Key set ✓';
+        document.getElementById('api-status').className = 'api-status set';
+      } else {
+        sessionStorage.removeItem('prism_api_key');
+        document.getElementById('api-status').textContent = 'Not set';
+        document.getElementById('api-status').className = 'api-status unset';
+      }
+      updateAnalyzeBtn();
+    }
+
+    // Restore key from sessionStorage on page load
+    window.addEventListener('load', () => {
+      const saved = sessionStorage.getItem('prism_api_key');
+      if (saved) {
+        document.getElementById('api-key-input').value = saved;
+        document.getElementById('api-status').textContent = 'Key set ✓';
+        document.getElementById('api-status').className = 'api-status set';
+      }
+    });
+
+    // ── Chip selection ───────────────────────────────────
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const scenario = chip.dataset.s;
+        const input = document.getElementById('scenario-input');
+        if (chip.classList.contains('on')) {
+          chip.classList.remove('on');
+          input.value = '';
+        } else {
+          document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+          chip.classList.add('on');
+          input.value = scenario;
+        }
+        updateAnalyzeBtn();
+      });
+    });
+
+    document.getElementById('scenario-input').addEventListener('input', function () {
+      document.querySelectorAll('.chip').forEach(c => {
+        if (c.dataset.s !== this.value) c.classList.remove('on');
+      });
+      updateAnalyzeBtn();
+    });
+
+    function updateAnalyzeBtn() {
+      const hasScenario = !!document.getElementById('scenario-input').value.trim();
+      const hasKey = !!sessionStorage.getItem('prism_api_key');
+      document.getElementById('analyze-btn').disabled = !(hasScenario && hasKey);
+    }
+
+    // ── Main API call ─────────────────────────────────────
+    async function analyze() {
+      const scenario = document.getElementById('scenario-input').value.trim();
+      const apiKey = sessionStorage.getItem('prism_api_key');
+      if (!scenario || !apiKey) return;
+
+      // UI: loading state
+      document.getElementById('analyze-btn').disabled = true;
+      document.getElementById('loading-area').style.display = 'flex';
+      document.getElementById('results-area').innerHTML = '';
+      document.getElementById('err-box').style.display = 'none';
+      showFrameworks = false;
+
+      try {
+        /*
+          THE API CALL
+          ────────────
+          fetch() sends an HTTP POST request to Anthropic.
+
+          Headers:
+          - Content-Type: we're sending JSON
+          - x-api-key: your Anthropic API key
+          - anthropic-version: required by Anthropic —
+            tells the API which version of the spec to use
+          - anthropic-dangerous-direct-browser-access: required
+            when calling the API directly from a browser
+            (normally the API is called from a server)
+
+          Body (JSON):
+          - model: which Claude model to use
+          - max_tokens: max length of the response
+          - system: the system prompt (model instructions)
+          - messages: the conversation so far. Here it's
+            just one user message — the scenario text.
+        */
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true',
+          },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-6',
+            max_tokens: 1000,
+            system: SYSTEM_PROMPT,
+            messages: [
+              { role: 'user', content: scenario }
+            ],
+          }),
+        });
+
+        /*
+          PARSING THE RESPONSE
+          ─────────────────────
+          The API returns JSON. The model's text lives at:
+          data.content[0].text
+
+          Because we told the model to return only JSON,
+          we then parse that text as JSON to get our
+          structured data (dynamics, barriers, levers).
+        */
+        const data = await response.json();
+
+        if (!response.ok) {
+          // The API returned an error (e.g. invalid key,
+          // quota exceeded). Show the error message.
+          throw new Error(data.error?.message || 'API error');
+        }
+
+        const rawText = data.content.find(b => b.type === 'text')?.text || '';
+        const cleanText = rawText.replace(/```json|```/g, '').trim();
+        const parsed = JSON.parse(cleanText);
+
+        renderResults(parsed, scenario);
+
+      } catch (err) {
+        const errBox = document.getElementById('err-box');
+        errBox.textContent = err.message.includes('API key')
+          ? 'Invalid API key. Check your key at console.anthropic.com.'
+          : `Analysis failed: ${err.message}. Please try again.`;
+        errBox.style.display = 'block';
+      } finally {
+        document.getElementById('loading-area').style.display = 'none';
+        document.getElementById('analyze-btn').disabled = false;
+      }
+    }
+
+    // ── Render results ────────────────────────────────────
+    function renderResults(data, scenario) {
+      const preview = scenario.length > 88 ? scenario.slice(0, 88) + '…' : scenario;
+
+      let html = `
+        <section class="res-sec">
+          <div class="res-top">
+            <div>
+              <h2 class="res-h2">Analysis</h2>
+              <p class="res-preview">"${preview}"</p>
+            </div>
+            <button class="fwtgl" id="fw-btn" onclick="toggleFrameworks()">Show frameworks</button>
+          </div>
+      `;
+
+      CARDS.forEach(card => {
+        const items = data[card.key] || [];
+        if (!items.length) return;
+
+        html += `
+          <div class="rcard">
+            <div class="chead">
+              <div class="cion" style="background:${card.ibg}">
+                <i class="ti ${card.iconClass}" aria-hidden="true"></i>
+              </div>
+              <span class="ctitle">${card.title}</span>
+            </div>
+            <div class="cbody">
+        `;
+
+        items.forEach(item => {
+          const ds = DISCIPLINE_STYLES[item.discipline] || DISCIPLINE_STYLES["Behavioral Science"];
+          html += `
+            <div class="irow">
+              <span class="dtag" style="background:${ds.bg};color:${ds.text}">${item.discipline}</span>
+              <div class="iright">
+                <p class="itext">${item.insight}</p>
+                <div class="fwblk" style="border-color:${ds.border}">
+                  <p class="fwname" style="color:${ds.text}">${item.framework_name}</p>
+                  <p class="fwexp">${item.framework_explanation}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        html += `</div></div>`;
+      });
+
+      html += `</section>`;
+      document.getElementById('results-area').innerHTML = html;
+    }
+
+    // ── Framework toggle ──────────────────────────────────
+    function toggleFrameworks() {
+      showFrameworks = !showFrameworks;
+      const btn = document.getElementById('fw-btn');
+      document.querySelectorAll('.fwblk').forEach(b => b.classList.toggle('vis', showFrameworks));
+      btn.textContent = showFrameworks ? 'Hide frameworks' : 'Show frameworks';
+      btn.classList.toggle('on', showFrameworks);
+    }
+  </script>
+</body>
+</html>
