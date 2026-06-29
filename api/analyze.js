@@ -1,10 +1,17 @@
 export default async function handler(req, res) {
-  // Only allow POST requests
+  // Handle CORS preflight
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Get the scenario from the request body
   const { scenario } = req.body;
 
   if (!scenario) {
@@ -48,14 +55,9 @@ Each section must contain 2-3 items. The discipline field must be exactly one of
     const cleanText = rawText.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(cleanText);
 
-    // Set CORS headers so your GitHub Pages site can call this
-    res.setHeader('Access-Control-Allow-Origin', 'https://rachelyhkim-cog.github.io');
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
     return res.status(200).json(parsed);
 
   } catch (err) {
-    return res.status(500).json({ error: 'Analysis failed. Please try again.' });
+    return res.status(500).json({ error: err.message || 'Analysis failed. Please try again.' });
   }
 }
