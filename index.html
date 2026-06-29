@@ -7,27 +7,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Pool room pastel palette — drawn from images 1 & 2 */
-      --tile:       #dfece8;   /* cool white tile — the walls */
-      --tile-warm:  #ECE8DA;   /* warm ivory pillar room — image 2 */
-      --aqua-pale:  #BEE0DA;   /* palest pool water */
-      --aqua:       #7ECCC0;   /* soft pastel aqua — the water surface */
-      --aqua-deep:  #4AB8A8;   /* medium aqua for headers & footer */
-      --sky:        #C8E2EC;   /* pale ceiling blue — image 1 overhead */
-      --mint:       #CCEAE4;   /* soft mint */
-      --ink:        #1C2A28;   /* dark text for all light sections */
+      --tile:       #dfece8;
+      --tile-warm:  #ECE8DA;
+      --aqua-pale:  #BEE0DA;
+      --aqua:       #7ECCC0;
+      --aqua-deep:  #4AB8A8;
+      --sky:        #C8E2EC;
+      --mint:       #CCEAE4;
+      --ink:        #1C2A28;
       --ink-60:     rgba(28,42,40,0.60);
       --ink-35:     rgba(28,42,40,0.35);
       --ink-12:     rgba(28,42,40,0.12);
-      --teal-link:  #1E8070;   /* dark teal for links on pale sections */
+      --teal-link:  #1E8070;
       --white:      #FFFFFF;
       --w80:        rgba(255,255,255,0.80);
       --w50:        rgba(255,255,255,0.50);
       --w20:        rgba(255,255,255,0.20);
       --optima:     "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
     }
-#proj-brochures  { background: var(--mint);       }
-    #proj-prism      { background: var(--aqua-pale);  }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
@@ -42,14 +40,12 @@
 
     a { color: inherit; text-decoration: none; }
 
-    /* ── Corridor: soft pastel shimmer ─────────────────────── */
     .corridor {
       height: 2px;
       background: linear-gradient(90deg,
         var(--aqua-deep), var(--sky), var(--mint), var(--aqua-pale), var(--aqua-deep));
     }
 
-    /* ── Nav ── medium aqua, spa-like ──────────────────────── */
     nav {
       position: fixed;
       top: 0; width: 100%;
@@ -95,7 +91,6 @@
 
     .nav-contact:hover { color: var(--white); }
 
-    /* ── Name header ── white tile room ────────────────────── */
     .name-header-wrapper { background: var(--tile); }
 
     .name-header {
@@ -129,7 +124,6 @@
       font-weight: 300;
     }
 
-    /* ── Section headers ── medium aqua ────────────────────── */
     .section-header-wrap { background: var(--aqua-deep); }
 
     .section-header {
@@ -144,14 +138,14 @@
       border-bottom: 1px solid var(--w20);
     }
 
-    /* ── Per-project backgrounds ── all pastels ────────────── */
-    #proj-websites   { background: var(--aqua-pale);  }  /* palest pool water */
-    #proj-reports    { background: var(--tile-warm);  }  /* warm ivory pillar room */
-    #proj-wireframes { background: var(--sky);        }  /* soft ceiling blue */
-    #proj-brochures  { background: var(--mint);       }  /* soft mint tile */
-    #research        { background: var(--aqua);       }  /* soft pastel aqua */
+    /* ── Per-project backgrounds ── */
+    #proj-websites   { background: var(--aqua-pale);  }
+    #proj-reports    { background: var(--tile-warm);  }
+    #proj-wireframes { background: var(--sky);        }
+    #proj-brochures  { background: var(--mint);       }
+    #proj-prism      { background: var(--aqua-pale);  }
+    #research        { background: var(--aqua);       }
 
-    /* ── Project cards ─────────────────────────────────────── */
     .project {
       display: flex;
       min-height: 420px;
@@ -202,7 +196,6 @@
       justify-content: flex-end;
     }
 
-    /* All project text is dark (all sections are light) */
     .project-cat {
       font-size: 0.9rem;
       letter-spacing: 0.24em;
@@ -249,7 +242,6 @@
 
     .arrow { width: 13px; height: 13px; flex-shrink: 0; }
 
-    /* ── Research section ── pastel aqua ───────────────────── */
     .research-card {
       max-width: 1100px;
       margin: 0 auto;
@@ -350,7 +342,6 @@
       line-height: 1.55;
     }
 
-    /* ── Footer ── medium aqua, matches nav ─────────────────── */
     footer {
       background: var(--aqua-deep);
       border-top: 1px solid var(--w20);
@@ -383,7 +374,6 @@
 
     .footer-links a:hover { color: var(--white); }
 
-    /* ── Responsive ─────────────────────────────────────────── */
     @media (max-width: 860px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links li:not(:last-child) { display: none; }
@@ -423,7 +413,7 @@
     </ul>
   </nav>
 
-  <!-- Name header — cool white tile -->
+  <!-- Name header -->
   <div class="name-header-wrapper">
     <header class="name-header">
       <h1>Rachel Y. Kim, M.S.S.</h1>
@@ -441,7 +431,7 @@
       <h2 class="section-header">Projects</h2>
     </div>
 
-    <!-- Websites — palest pool water -->
+    <!-- Websites -->
     <div class="project web" id="proj-websites">
       <div class="project-img">
         <img src="images/WebsiteArts.png" alt="Website screenshot">
@@ -463,7 +453,7 @@
       </div>
     </div>
 
-    <!-- Impact Reports — warm ivory pillar room -->
+    <!-- Impact Reports -->
     <div class="project design flip" id="proj-reports">
       <div class="project-img">
         <img src="images/impactreportart.png" alt="Impact Report Examples">
@@ -485,7 +475,7 @@
       </div>
     </div>
 
-    <!-- Wireframes — pale ceiling blue -->
+    <!-- Wireframes -->
     <div class="project wire" id="proj-wireframes">
       <div class="project-img">
         <img src="images/remecoart.png" alt="Remeco Example Art">
@@ -507,7 +497,7 @@
       </div>
     </div>
 
-    <!-- Brochures — soft mint -->
+    <!-- Brochures -->
     <div class="project design flip" id="proj-brochures">
       <div class="project-img">
         <img src="images/Brochuresart.png" alt="Brochures Sample">
@@ -533,29 +523,31 @@
       </div>
     </div>
 
+    <!-- Prism — AI tool -->
+    <div class="project" id="proj-prism">
+      <div class="project-img">
+        <!-- Add a screenshot of Prism later -->
+      </div>
+      <div class="project-body">
+        <span class="project-cat">AI Tools &amp; Behavioral Science</span>
+        <h3>Prism</h3>
+        <p>An interactive, Claude-powered behavioral analysis tool that surfaces the empathic, cooperative, and cognitive dynamics driving behavior in real-world social scenarios. Enter a policy, program, or community problem — Prism draws on behavioral science, cognitive science, social psychology, and social science to analyze what is happening, why it persists, and what evidence-based levers could move the needle.</p>
+        <div class="project-links">
+          <a href="prism.html" target="_blank" class="project-link">
+            Launch Prism
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <div class="corridor"></div>
 
-  <!-- RESEARCH — soft pastel aqua -->
+  <!-- RESEARCH -->
   <section id="research">
-<!-- Prism — AI tool -->
-<div class="project" id="proj-prism">
-  <div class="project-img">
-    <!-- Add a screenshot of Prism later -->
-  </div>
-  <div class="project-body">
-    <span class="project-cat">AI Tools &amp; Behavioral Science</span>
-    <h3>Prism</h3>
-    <p>An interactive, Claude-powered behavioral analysis tool that surfaces the empathic, cooperative, and cognitive dynamics driving behavior in real-world social scenarios. Enter a policy, program, or community problem — Prism draws on behavioral science, cognitive science, social psychology, and social science to analyze what is happening, why it persists, and what evidence-based levers could move the needle.</p>
-    <div class="project-links">
-      <a href="prism.html" target="_blank" class="project-link">
-        Launch Prism
-        <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-      </a>
-    </div>
-  </div>
-</div>
+
     <div class="section-header-wrap">
       <h2 class="section-header">Research</h2>
     </div>
