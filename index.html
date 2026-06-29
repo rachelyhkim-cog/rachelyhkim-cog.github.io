@@ -139,11 +139,11 @@
     }
 
     /* ── Per-project backgrounds ── */
-    #proj-websites   { background: var(--aqua-pale);  }
-    #proj-reports    { background: var(--tile-warm);  }
-    #proj-wireframes { background: var(--sky);        }
-    #proj-brochures  { background: var(--mint);       }
     #proj-prism      { background: var(--aqua-pale);  }
+    #proj-websites   { background: var(--tile-warm);  }
+    #proj-reports    { background: var(--sky);        }
+    #proj-wireframes { background: var(--mint);       }
+    #proj-brochures  { background: var(--aqua-pale);  }
     #research        { background: var(--aqua);       }
 
     .project {
@@ -187,6 +187,7 @@
     }
 
     .project-img:has(img)::after { display: none; }
+    .project-img:has(svg)::after { display: none; }
 
     .project-body {
       flex: 1;
@@ -241,6 +242,22 @@
     .project-link:hover { gap: 0.95rem; opacity: 0.7; }
 
     .arrow { width: 13px; height: 13px; flex-shrink: 0; }
+
+    /* Prism symbol container */
+    .prism-symbol {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .prism-bar {
+      width: 18px;
+      border-radius: 4px;
+      height: 120px;
+    }
 
     .research-card {
       max-width: 1100px;
@@ -359,10 +376,7 @@
       color: var(--w80);
     }
 
-    .footer-links {
-      display: flex;
-      gap: 1.75rem;
-    }
+    .footer-links { display: flex; gap: 1.75rem; }
 
     .footer-links a {
       font-size: 0.65rem;
@@ -431,8 +445,31 @@
       <h2 class="section-header">Projects</h2>
     </div>
 
-    <!-- Websites -->
-    <div class="project web" id="proj-websites">
+    <!-- Prism — first, no flip: image left -->
+    <div class="project" id="proj-prism">
+      <div class="project-img">
+        <div class="prism-symbol">
+          <div class="prism-bar" style="background:#F7467A;"></div>
+          <div class="prism-bar" style="background:#E4BD54;"></div>
+          <div class="prism-bar" style="background:#7DAA4D;"></div>
+          <div class="prism-bar" style="background:#9DD9F3;"></div>
+        </div>
+      </div>
+      <div class="project-body">
+        <span class="project-cat">AI Tools &amp; Behavioral Science</span>
+        <h3>Prism</h3>
+        <p>An interactive, Claude-powered behavioral analysis tool that surfaces the empathic, cooperative, and cognitive dynamics driving behavior in real-world social scenarios. Enter a policy, program, or community problem — Prism draws on behavioral science, cognitive science, social psychology, and social science to analyze what is happening, why it persists, and what evidence-based levers could move the needle.</p>
+        <div class="project-links">
+          <a href="prism.html" target="_blank" class="project-link">
+            Launch Prism
+            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Websites — second, flip: image right -->
+    <div class="project flip" id="proj-websites">
       <div class="project-img">
         <img src="images/WebsiteArts.png" alt="Website screenshot">
       </div>
@@ -453,8 +490,8 @@
       </div>
     </div>
 
-    <!-- Impact Reports -->
-    <div class="project design flip" id="proj-reports">
+    <!-- Impact Reports — third, no flip: image left -->
+    <div class="project" id="proj-reports">
       <div class="project-img">
         <img src="images/impactreportart.png" alt="Impact Report Examples">
       </div>
@@ -475,8 +512,8 @@
       </div>
     </div>
 
-    <!-- Wireframes -->
-    <div class="project wire" id="proj-wireframes">
+    <!-- Wireframes — fourth, flip: image right -->
+    <div class="project flip" id="proj-wireframes">
       <div class="project-img">
         <img src="images/remecoart.png" alt="Remeco Example Art">
       </div>
@@ -497,8 +534,8 @@
       </div>
     </div>
 
-    <!-- Brochures -->
-    <div class="project design flip" id="proj-brochures">
+    <!-- Brochures — fifth, no flip: image left -->
+    <div class="project" id="proj-brochures">
       <div class="project-img">
         <img src="images/Brochuresart.png" alt="Brochures Sample">
       </div>
@@ -517,24 +554,6 @@
           </a>
           <a href="files/BennettKewPoster.png" target="_blank" class="project-link">
             Reimagining Reality Youth Program Poster
-            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Prism — AI tool -->
-    <div class="project" id="proj-prism">
-      <div class="project-img">
-        <!-- Add a screenshot of Prism later -->
-      </div>
-      <div class="project-body">
-        <span class="project-cat">AI Tools &amp; Behavioral Science</span>
-        <h3>Prism</h3>
-        <p>An interactive, Claude-powered behavioral analysis tool that surfaces the empathic, cooperative, and cognitive dynamics driving behavior in real-world social scenarios. Enter a policy, program, or community problem — Prism draws on behavioral science, cognitive science, social psychology, and social science to analyze what is happening, why it persists, and what evidence-based levers could move the needle.</p>
-        <div class="project-links">
-          <a href="prism.html" target="_blank" class="project-link">
-            Launch Prism
             <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
         </div>
