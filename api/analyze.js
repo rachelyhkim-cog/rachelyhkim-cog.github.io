@@ -34,7 +34,7 @@ Each section must contain 2-3 items. The discipline field must be exactly one of
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
+        max_tokens: 2000,
         system: SYSTEM_PROMPT,
         messages: [{ role: 'user', content: scenario }],
       }),
