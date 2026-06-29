@@ -258,25 +258,22 @@
       margin: 0 auto;
     }
 
-    .research-img {
-      width: 100%;
-      height: 440px;
-      background: rgba(255,255,255,0.3);
-      border-bottom: 1px solid var(--ink-12);
+    .research-top {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+      gap: 3.5rem;
+      padding: 3.5rem 3rem;
+      align-items: flex-start;
     }
 
-    .research-img::after {
-      content: 'Add image';
-      font-family: var(--optima);
-      font-size: 0.6rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-35);
+    .research-text { flex: 1; }
+
+    .research-img {
+      flex-shrink: 0;
+      width: 300px;
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--ink-12);
     }
 
     .research-img img {
@@ -285,18 +282,8 @@
       object-fit: cover;
     }
 
-    .research-img:has(img)::after { display: none; }
-
-    .research-body {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 5rem;
-      padding: 3.5rem 3rem;
-      align-items: start;
-    }
-
     .research-cat {
-      font-size: 0.9rem;
+      font-size: 1rem;
       letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--teal-link);
@@ -304,16 +291,16 @@
       display: block;
     }
 
-    .research-body h3 {
-      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    .research-text h3 {
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
       font-weight: 400;
       color: var(--ink);
       line-height: 1.25;
       margin-bottom: 1.1rem;
     }
 
-    .research-body > div > p {
-      font-size: 0.9rem;
+    .research-text p {
+      font-size: 1rem;
       color: var(--ink-60);
       line-height: 1.75;
       margin-bottom: 1.75rem;
@@ -323,7 +310,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.55rem;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--teal-link);
@@ -332,14 +319,16 @@
 
     .research-link:hover { gap: 0.95rem; opacity: 0.7; }
 
-    .research-meta {
-      border-left: 1px solid var(--ink-12);
-      padding-left: 5rem;
-      padding-top: 0.5rem;
+    .research-bottom {
+      display: flex;
+      gap: 4rem;
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--ink-12);
+      flex-wrap: wrap;
     }
 
     .meta-label {
-      font-size: 0.55rem;
+      font-size: 0.7rem;
       letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--ink-35);
@@ -347,9 +336,8 @@
     }
 
     .meta-value {
-      font-size: 0.85rem;
+      font-size: 1rem;
       color: var(--ink-60);
-      margin-bottom: 1.75rem;
       line-height: 1.55;
     }
 
@@ -566,11 +554,10 @@
     </div>
 
     <div class="research-card">
-      <div class="research-img">
-        <img src="images/earthart.png" alt="Earth Art">
-      </div>
-      <div class="research-body">
-        <div>
+
+      <!-- Top: text left, square image right -->
+      <div class="research-top">
+        <div class="research-text">
           <span class="research-cat">Academic Research — Capstone</span>
           <h3>Enhancing Global Crisis Communication via Generative AI Chatbots: The Importance of Personalized Crisis Communication</h3>
           <p>This review paper examines how generative AI chatbots can improve global crisis communication by delivering more personalized, context-sensitive guidance during moments of uncertainty. Using a literature-based analysis of crisis communication, cognitive barriers, and AI-mediated messaging, the paper argues that chatbot systems can help address confusion, mistrust, information overload, and differences in how people interpret risk. It contributes a framework for thinking about AI as a communication tool that can adapt public-facing crisis messages to different audiences without losing clarity, accuracy, or ethical responsibility.</p>
@@ -579,15 +566,27 @@
             <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
         </div>
-        <div class="research-meta">
+        <div class="research-img">
+          <img src="images/earthart.png" alt="Earth Art">
+        </div>
+      </div>
+
+      <!-- Bottom: Institution, Year, Keywords in a horizontal row -->
+      <div class="research-bottom">
+        <div class="meta-group">
           <p class="meta-label">Institution</p>
           <p class="meta-value">UCLA — Master's in Social Science</p>
+        </div>
+        <div class="meta-group">
           <p class="meta-label">Year</p>
           <p class="meta-value">2025</p>
+        </div>
+        <div class="meta-group">
           <p class="meta-label">Keywords</p>
           <p class="meta-value">Crisis communication · Generative AI · Personalization · Chatbots</p>
         </div>
       </div>
+
     </div>
 
   </section>
