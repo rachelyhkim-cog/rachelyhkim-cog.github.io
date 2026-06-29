@@ -170,15 +170,6 @@
       border-left: 1px solid var(--ink-12);
     }
 
-    .project-img::after {
-      content: 'Add image';
-      font-family: var(--optima);
-      font-size: 0.6rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-35);
-      pointer-events: none;
-    }
 
     .project-img img {
       position: absolute; inset: 0;
@@ -186,9 +177,8 @@
       object-fit: cover;
     }
 
-  .project-img:has(img)::after { display: none; }
-.project-img:has(svg)::after { display: none; }
-.project-img:has(.prism-symbol)::after { display: none; }
+    .project-img:has(img)::after { display: none; }
+    .project-img:has(svg)::after { display: none; }
 
     .project-body {
       flex: 1;
@@ -244,20 +234,23 @@
 
     .arrow { width: 13px; height: 13px; flex-shrink: 0; }
 
-    /* Prism symbol container */
+    /* Prism card — full-width strip layout */
+    #proj-prism .project-img {
+      flex: 0 0 80px;
+      border-right: 1px solid var(--ink-12);
+    }
+
     .prism-symbol {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      flex-direction: row;
       width: 100%;
       height: 100%;
     }
 
     .prism-bar {
-      width: 18px;
-      border-radius: 4px;
-      height: 120px;
+      flex: 1;
+      height: 100%;
+      border-radius: 0;
     }
 
     .research-card {
