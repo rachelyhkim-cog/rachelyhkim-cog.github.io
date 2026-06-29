@@ -186,8 +186,9 @@
       object-fit: cover;
     }
 
-    .project-img:has(img)::after { display: none; }
-    .project-img:has(svg)::after { display: none; }
+  .project-img:has(img)::after { display: none; }
+.project-img:has(svg)::after { display: none; }
+.project-img:has(.prism-symbol)::after { display: none; }
 
     .project-body {
       flex: 1;
