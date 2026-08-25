@@ -106,21 +106,27 @@
     }
 
     .nav-dropdown-menu {
-      display: none;
-      position: absolute;
-      top: calc(100% + 0.75rem);
-      right: 0;
-      background: rgba(74, 184, 168, 0.99);
-      backdrop-filter: blur(14px);
-      border: 1px solid var(--w20);
-      border-radius: 4px;
-      min-width: 240px;
-      padding: 0.4rem 0;
-      z-index: 300;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    }
+     .nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;              /* flush against button — no dead gap */
+  right: 0;
+  padding-top: 0.75rem;   /* invisible buffer replaces the old gap */
+  z-index: 300;
+}
 
-    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+
+.nav-dropdown-menu-inner {
+  background: rgba(74, 184, 168, 0.99);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--w20);
+  border-radius: 4px;
+  min-width: 240px;
+  padding: 0.4rem 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+    }
 
     .nav-dropdown-menu a {
       display: block;
@@ -470,32 +476,25 @@
 <body>
 
   <!-- Nav -->
-  <nav>
-    <span class="nav-name">Rachel Y. Kim</span>
-    <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="https://linkedin.com/in/rachelyhkim" target="_blank" rel="noopener">LinkedIn</a></li>
-      <li><a href="/RYKim_CV.pdf" target="_blank" rel="noopener">CV</a></li>
-      <li class="nav-dropdown">
-        <button class="nav-dropdown-btn">Contact</button>
-        <div class="nav-dropdown-menu">
-          <a href="mailto:kim.rachel2000@gmail.com">
-            <span class="email-label">Personal</span>
-            <span class="email-address">kim.rachel2000@gmail.com</span>
-          </a>
-          <a href="mailto:rachelyhkim@ucla.edu">
-            <span class="email-label">School</span>
-            <span class="email-address">rachelyhkim@ucla.edu</span>
-          </a>
-          <a href="mailto:rachel@madenewfoundation.org">
-            <span class="email-label">Work</span>
-            <span class="email-address">rachel@madenewfoundation.org</span>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </nav>
+<li class="nav-dropdown">
+  <button class="nav-dropdown-btn">Contact</button>
+  <div class="nav-dropdown-menu">
+    <div class="nav-dropdown-menu-inner">
+      <a href="mailto:kim.rachel2000@gmail.com">
+        <span class="email-label">Personal</span>
+        <span class="email-address">kim.rachel2000@gmail.com</span>
+      </a>
+      <a href="mailto:rachelyhkim@ucla.edu">
+        <span class="email-label">School</span>
+        <span class="email-address">rachelyhkim@ucla.edu</span>
+      </a>
+      <a href="mailto:rachel@madenewfoundation.org">
+        <span class="email-label">Work</span>
+        <span class="email-address">rachel@madenewfoundation.org</span>
+      </a>
+    </div>
+  </div>
+</li>
 
   <!-- Name header -->
   <div class="name-header-wrapper">
